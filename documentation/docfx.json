@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "OpenTransit",
+      "_appTitle": "OpenTransit",
+      "_appLogoPath": "images/logo.svg",
+      "_appFooter": "<footer></footer>",
+      "_enableSearch": true,
+      "pdf": true
+    }
+  }
+}
