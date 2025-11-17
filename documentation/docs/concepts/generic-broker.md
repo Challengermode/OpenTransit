@@ -47,7 +47,7 @@ You can create and configure the routing between PublishEndpoint to the ReceiveE
 
 You can define **routing mappings** between endpoints—specifying which Receive Endpoint(s) should receive messages published to a given Publish Endpoint.
 
-In the [Basic Communication Tutorial](../tutorials/basic-communication.md) we have seen how Message types is used to Create and Configure Create Endpoints and Receive Endpoints. 
+In the [Basic Communication Tutorial](../tutorials/basic-communication.md#generic-broker-topology) we have seen how Message types is used to Create and Configure Publish Endpoints and Receive Endpoints. 
 
 > [!NOTE]
 > Some concepts in this documentation are still evolving. Details on how the Generic Broker constructs the underlying topology for different message types will be added in a future update.

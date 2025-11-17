@@ -12,7 +12,7 @@ Opentransit’s Definition is sort of a combination of the both cause opentransi
 
 So in OpenTransit, **Topology is the broker’s internal configuration, and also the Configuration of how the Application (via OpenTransit) interacts with the broker.**
 
-However, when we want to mean only in broker's context, we will use the term 'Broker's Underlying Topology' throughout the doc. 
+However, when we want to mean only in broker's context, we will use the term 'Broker's Internal Topology' throughout the doc. 
 
 
 
@@ -27,7 +27,7 @@ From the definition, Configuring topology may mean Configuring both of the follo
 OpenTransit defines topology via the Message type 
 
 ### Message Types as First-class citizens:
-You have already seen in the [tutorial](../tutorials/basic-communication) how Message Types (classes, records, or interfaces) are used when Configuring the broker, and how Producers and Consumers interact with the PublishEndpoint and ReceiveEndpoint depending on the Message Type. 
+You have already seen in the [tutorial](../tutorials/basic-communication#generic-broker-topology) how Message Types (classes, records, or interfaces) are used when Configuring the broker, and how Producers and Consumers interact with the PublishEndpoint and ReceiveEndpoint depending on the Message Type. 
 It gives a strongly typed facility that you wouldn’t have found if you were to use the raw .NET Client of the broker. 
 It also abstracts away the details of topology from the Broker interaction point of view and provides a Method call-like syntax and hides the detail of broker Communication. 
 
@@ -42,7 +42,7 @@ OpenTransit provides two ways to define the broker topology.
 ## Broker agnostic Way:
 We can define both the Broker’s internal Configuraiton and OpenTransit’s Interaction in a Broker agnostic way. 
 
-In the [tutorial](../tutorials/basic-communication.md), the topology is defined in a broker agnostic way. 
+In the [tutorial](../tutorials/basic-communication.md#generic-broker-topology), the topology is defined in a broker agnostic way. 
 
 One of the most powerful feature of OpenTransit is the way it abstracts away the detail of a broker. 
 We can use an underlying broker without knowing the intrinsic details. 

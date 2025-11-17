@@ -23,7 +23,7 @@ You need to understand these 5 things to have a basic knowledge of Distributed C
 2. [How Messages are published](#2-publishing-messages)
 3. [How Messages are Consumed](#3-consuming-a-message)
 4. [How the OpenTransit Setup is done](#4-masstransit-setup) 
-5. [The Topology Created inside the Broker](#5-the-broker-topologyrabbitmq)
+5. [The Topology](#5-the-topology)
 
 
 ### 1. Defining Messages
@@ -112,13 +112,30 @@ All the above 3 tasks is done onthe `Program.cs` of OrderService
 
 ---
 
-### 5. The Broker Topology(RabbitMQ):
+### 5. The Topology:
 
 This example uses **[broker-agnostic](../concepts/topology#broker-agnostic-way)** configuration, so you don’t need to understand the underlying broker [topology](../concepts/topology) for basic communication.  
-Here, we only used the `UsingRabbitMq` method to provide the Connection Configuration and to configure the [ReceiveEndpoint](../concepts/generic-broker#generic-broker-terminologies)(a generic concept among all the brokers) on the broker. 
+Here, we only used the `UsingRabbitMq` method to provide the Connection Configuration and to configure the Publish and Receive [Endpoints](../concepts/generic-broker#generic-broker-terminologies)(a generic concept among all the brokers) on the broker. 
 
-Since this Configurations aren't RabbitMQ specific, and you may use any other broker here and, the Message Communication would work fine. 
+Since this Configurations aren't RabbitMQ specific, and you may use any other broker here and, the Message Communication would work fine. We will add examples with other brokers soon.
 
+
+#### Generic Broker Topology
+
+In this project, we work with two message types: **SubmitOrder** and **ProcessOrder**.  
+Based on these message types, the topology is set up in the following way:
+
+1. **Two Publish Endpoints and Two Receive Endpoints are created**, one pair for each message type.
+2. Each `IConsumer<T>` is automatically subscribed to the **Receive Endpoint** for its message type **T**.
+3. When you call `Publish(T message)`, the message is sent to the corresponding **Publish Endpoint** for type **T**.
+4. The **Receive Endpoint** for message type **T** is bound to the **Publish Endpoint** of **T**.  
+   This ensures that whenever a message of type **T** is published, it is routed from the Publish Endpoint to the Receive Endpoint by the broker.
+5. Once the message reaches the Receive Endpoint of the broker, it is delivered to the appropriate `IConsumer<T>` implementation(i.e. the `Consume` method is called).
+
+
+#### Broker's internal topology
+
+# [RabbitMQ](#tab/rabbitmq)
 However, knowing the underlying broker [topology](../concepts/topology) is very helpful when debugging message-routing issues.
 
 In our example, Each Consumer is consuming a single message type. 
@@ -129,13 +146,7 @@ Another **Exchange** named `Shared:SubmitOrder` is created and the `SubmitOrder`
 
 When we publish SubmitOrder messages via a Producer, the message is published to the `Shared:SubmitOrder` exchange, then routed to the SubmitOrder exchange and, then ultimately routed to the SubmitOrder queue. 
 
-
-#### Generic Broker's Perspective
-From the perspective of the [Generic Broker](../concepts/generic-broker), the `Shared:SubmitOrder` **Exchange** is the PublishEndpoint, the `SubmitOrder` **Queue** is the ReceiveEndpoint. 
-The `SubmitOrder` **Exchange** can be seen as an Internal ReceiveEndpoint. However, we haven't added such concept/term in the [Generic Broker](../concepts/generic-broker) yet.  
-
-
-Why the topology is defined that way, what we are gaining, etc, is out of scope of this tutorial. We will have separate sections for it. 
+---
 
 To have a better understanding, you may clone the [project](https://github.com/OpenTransitLab/Tutorials/tree/main/Tutorials.BasicCommunication) and create more message types experimentation.
 
