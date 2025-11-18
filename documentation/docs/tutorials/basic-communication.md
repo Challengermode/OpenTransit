@@ -146,6 +146,15 @@ Another **Exchange** named `Shared:SubmitOrder` is created and the `SubmitOrder`
 
 When we publish SubmitOrder messages via a Producer, the message is published to the `Shared:SubmitOrder` exchange, then routed to the SubmitOrder exchange and, then ultimately routed to the SubmitOrder queue. 
 
+#### Mapping RabbitMQ topology with the Generic Broker
+
+Here, we are mapping RabbitMQ-specific concepts to the Generic Broker model.
+
+- The `SubmitOrder` and `ProcessOrder` queues act as the **Receive Endpoints** for the `SubmitOrder` and `ProcessOrder` messages, respectively.
+- The `Shared:SubmitOrder` and `Shared:ProcessOrder` exchanges represent the **Publish Endpoints** for those same messages.
+- The remaining exchanges are RabbitMQ-specific implementation details and do not map to any concept in the Generic Broker.
+
+
 ---
 
 To have a better understanding, you may clone the [project](https://github.com/OpenTransitLab/Tutorials/tree/main/Tutorials.BasicCommunication) and create more message types experimentation.
