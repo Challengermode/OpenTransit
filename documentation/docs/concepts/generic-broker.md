@@ -10,7 +10,7 @@ For example:
 
 - All of them offer a **Publish Endpoint** where messages can be published.  
   - RabbitMQ calls this an **Exchange**.  
-  - Azure Service Bus, ActiveMQ, and Amazon SQS call it a **Topic**.
+  - Azure Service Bus, ActiveMQ, and Amazon SNS call it a **Topic**.
 
 - All of them provide a **Receive Endpoint**, typically referred to as a **Queue**, where consumers subscribe.
 

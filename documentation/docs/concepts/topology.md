@@ -21,7 +21,7 @@ So we now know what a topology is. Now we will know how to Configure the topolog
 
 From the definition, Configuring topology may mean Configuring both of the following things, 
 
-- Configuring the broker’s internal configuration like Publishendpoints(topic, exchange), Receive Endpoints(i.e. queue),  routing, etc. 
+- Configuring the broker’s internal configuration like Publish Endpoints(topic, exchange), Receive Endpoints(i.e. queue),  routing, etc. 
 - Configuring how OpenTransit interacts with the broker. 
 
 OpenTransit defines topology via the Message type 
