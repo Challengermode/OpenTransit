@@ -35,6 +35,7 @@ These patterns simplify complex messaging and orchestration scenarios, helping y
 
 Some of the supported patterns include:
 
+- [Commands and Events](patterns/commands-and-events/overview.md)
 - Request Response Pattern
 - Routing Slip Pattern
 - Mediator

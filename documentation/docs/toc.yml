@@ -7,3 +7,5 @@
   href: tutorials/toc.yml
 - name: Concepts
   href: concepts/toc.yml
+- name: Patterns
+  href: patterns/toc.yml

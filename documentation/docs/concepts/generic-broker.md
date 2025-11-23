@@ -1,9 +1,9 @@
 ﻿
-The generic broker concept is an abstraction of all the Broker supported by Masstransit. It contains all the common features of all the supported brokers. 
+The generic broker concept is an abstraction of all the Broker supported by OpenTransit. It contains all the common features of all the supported brokers. 
 
-# Common Broker Features
+## Common Broker Features
 
-Different message brokers provide different capabilities, but if you look at the most popular ones—RabbitMQ, Azure Service Bus, ActiveMQ, and Amazon SQS—you’ll notice a shared set of core features.  
+Different message brokers provide different capabilities, but if you look at the most popular ones—RabbitMQ, Azure Service Bus, ActiveMQ, and Amazon SQS & SNS, you’ll notice a shared set of core features.  
 In practice, these common features cover the majority of real-world use cases.
 
 For example:
@@ -24,7 +24,7 @@ These behaviors are consistent across brokers.
 
 
 
-# The Generic Broker Concept
+## The Generic Broker Concept
 
 OpenTransit takes advantage of these shared capabilities by introducing a **Generic Broker**—an abstraction that represents the common behavior of message brokers.  
 You configure your topology against this Generic Broker, and OpenTransit translates that configuration into the appropriate broker-specific topology under the hood.
@@ -32,22 +32,37 @@ You configure your topology against this Generic Broker, and OpenTransit transla
 This abstraction is the foundation of the Generic Broker concept.
 
 
-## Generic Broker Terminologies
+### Endpoints
 
 A Generic Broker defines two types of endpoints:
 
-- **Publish Endpoints**  
-- **Receive Endpoints**
+- **Receive Endpoint**
+- **Publish Endpoint**  
 
-You can create and configure the routing between PublishEndpoint to the ReceiveEndpoint based on Message Types.
+#### Receive Endpoint
 
-- Messages are generally **published** to a Publish Endpoint.  
-- Consumers **subscribe** to Receive Endpoints.  
-- Messages may also be sent **directly** to a Receive Endpoint if needed.
+A Receive Endpoint of a Broker is where Consumer(s) can Subscribe to Consume Messages. 
 
-You can define **routing mappings** between endpoints—specifying which Receive Endpoint(s) should receive messages published to a given Publish Endpoint.
+Messages can also be sent directly to the Receive Endpoint, too(instead of publishing to the Publish Endpoint). 
+This approach is typically used when performance is critical and no complex routing is required. We will discuss it in a separate section.
 
-In the [Basic Communication Tutorial](../tutorials/basic-communication.md#generic-broker-topology) we have seen how Message types is used to Create and Configure Publish Endpoints and Receive Endpoints. 
+The Generic Broker’s Receive Endpoint creates a [point-to-point Channel](https://www.enterpriseintegrationpatterns.com/patterns/messaging/PointToPointChannel.html) with its Consumers. 
+This means that even if **multiple** Consumers are attached to the **same** Receive Endpoint, each message is delivered to **only** one of them([Competing Consumer Pattern](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CompetingConsumers.html)).
+
+#### Publish Endpoint
+
+A Publish Endpoint of a broker is where Publishers Can Publish Messages. 
+
+#### Routing 
+
+When a Message is published on a Publish Endpoint, it is routed to the appropriate Receive Endpoint(s) based on the [topology’s](topology.md#configuring-the-topology) routing configuration. 
+
+In the [Commands and Events Pattern](../patterns/commands-and-events/overview.md#generic-broker-topology), we see how Message types are used to Create and Configure Publish Endpoints and Receive Endpoints of the Generic Broker. 
+
+
+
+
+
 
 > [!NOTE]
 > Some concepts in this documentation are still evolving. Details on how the Generic Broker constructs the underlying topology for different message types will be added in a future update.
