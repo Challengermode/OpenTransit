@@ -1,42 +1,50 @@
-﻿The term Topology is used in many context and have different meaning in different context. 
+﻿
+## Defining Topology
 
-However, in distributed system, it is generally used in two Contexts. They are, 
+The term Topology is used in many contexts and has different meanings in different contexts. 
+
+However, in a distributed system, it is generally used in two Contexts. They are, 
 1. Broker
 2. Architectural pattern. 
 
-In the context of a **broker**, it means the broker’s internal routing configuration i.e. the route mapping between the Publish Endpoint(i.e. Topics, Exchanges, etc) to Receive Endpoint(i.e Queues). 
+- In the context of a **broker**, it means the broker’s internal routing configuration i.e. the route mapping between the Publish Endpoint(i.e. Topics, Exchanges, etc) to Receive Endpoint(i.e Queues). 
 
-In the context of **Architectural patterns**, the Producers, Consumers and the Broker consists of the Topology. 
+- In the context of **Architectural patterns**, the Producers, Consumers and the Broker consists of the Topology. 
 
-Opentransit’s Definition is sort of a combination of the both cause opentransit helps you not only to Configure the Broker internally, but also helps to interact with it(i.e to Produce, consume, etc). 
+OpenTransit’s definition combines both perspectives. Because it not only helps you configure the broker’s internal topology, but also defines how your application (via OpenTransit) interacts with the broker—for example, how messages are produced and consumed.
 
-So in OpenTransit, **Topology is the broker’s internal configuration, and also the Configuration of how the Application (via OpenTransit) interacts with the broker.**
+Therefore, in OpenTransit:
 
-However, when we want to mean only in broker's context, we will use the term 'Broker's Internal Topology' throughout the doc. 
+- **Topology** refers to both the broker’s internal configuration and the application-level configuration that defines how it interacts with the broker.
+
+
+However, when referring strictly to the broker-level routing configuration, this documentation will specifically use the term **“Broker’s Internal Topology.”**
 
 
 
 ## Configuring the Topology:
-So we now know what a topology is. Now we will know how to Configure the topology. 
+Now that we understand what topology means, let’s look at how to **configure** it.
 
-From the definition, Configuring topology may mean Configuring both of the following things, 
+Based on the definition, configuring topology involves two aspects:
 
-- Configuring the broker’s internal configuration like Publishendpoints(topic, exchange), Receive Endpoints(i.e. queue),  routing, etc. 
-- Configuring how OpenTransit interacts with the broker. 
+- Configuring the broker’s internal setup, such as Publish Endpoints (topics, exchanges), Receive Endpoints (queues), routing, and so on.  
+- Configuring how OpenTransit interacts with the broker.
 
-OpenTransit defines topology via the Message type 
+OpenTransit defines topology through the **Message Type**.
 
 ### Message Types as First-class citizens:
-You have already seen in the [tutorial](../tutorials/basic-communication#generic-broker-topology) how Message Types (classes, records, or interfaces) are used when Configuring the broker, and how Producers and Consumers interact with the PublishEndpoint and ReceiveEndpoint depending on the Message Type. 
-It gives a strongly typed facility that you wouldn’t have found if you were to use the raw .NET Client of the broker. 
-It also abstracts away the details of topology from the Broker interaction point of view and provides a Method call-like syntax and hides the detail of broker Communication. 
+You have already seen in the [tutorial](../tutorials/basic-communication#generic-broker-topology) how Message Types (classes, records, or interfaces) are used when Configuring the broker, 
+and how Producers and Consumers interact with the Publish Endpoints and Receive Endpoints depending on the Message Type. 
 
-However, OpenTransit is flexible enough to provide lower level API’s if we want a lower level interaction.
+Using message types provides strong typing, which you wouldn’t get if you were interacting directly with the broker’s raw .NET client.
+It also abstracts away the complexity of broker topology and offers a method-call–like syntax that hides low-level broker communication details.
+
+However, OpenTransit is flexible and also provides lower-level APIs when you need more direct control.
 
 OpenTransit provides two ways to define the broker topology.
 
 - Broker Agnostic way(Common for any broker)
-- Broker Specific way(features provided by the broker, for example, routing key by RabbitMQ)(give an example link)
+- Broker Specific way(features provided by the broker, for example, routing key by RabbitMQ)
 
 
 ## Broker agnostic Way:
@@ -64,7 +72,7 @@ OpenTransit is flexible and provides a way where you can define broker specific 
 
 
 
-### Producer, Consumer, Publish, Subscribe, etc:
+### Terminologies:
 
 You may get confused with the usage of these terms in the doc with the terms used on Producer Consumer or Pub-Sub pattern. 
 
@@ -72,21 +80,38 @@ Well, in OpenTransit, we generally use the terms in our own way which may someti
 
 For example, 
 
-- Producer Publishes Messages to the PublishEndpoint
-- Producer Sends Messages directly to the ReceiveEndpoint
-- Consumer Subscribes to a Receive Endpoint
-- Consumer Consumes Messages
+- Producer **Publishes** Messages to the Publish Endpoint
+- Producer **Sends** Messages directly to the Receive Endpoint
+- Consumer **Subscribes** to a Receive Endpoint
+- Consumer **Consumes** Messages
 
-Here,
-Producer is something that Publishes/Sends Messages to the broker. 
-Consumer is something that Consumes/Subscribes to a ReceiveEndpoint to Consume Messages.  
+Let us discuss a bit more about them
 
-If two consumer subsribes to the Same ReceiveEndpoint, then only one will get a particular message(Competing Consumer pattern). So in that way it matches the Consumer’s definition of the Producer-Consumer pattern. 
+#### Producer
 
-Sometimes the terms Producer and Consumer is used to Describe the Application. 
-For example, the Applicaiton that publishes messages is a Producer Application, the application that Consumes messages is a Consumer. 
-However, an application may be both Producer and Consumer at the same time. 
+What we mean by Producer depends on the Context. 
 
+When we discuss **Topology** or **Application**, a Producer is an **Application** that Publishes or Sends Messages to Publish Endpoints and Receive Endpoints respectively. 
+In the [Basic Communication Tutorial](../tutorials/basic-communication.md#introducing-the-services) the Client and OrderService are Producer Applications.
+
+
+However, when we discuss **Code**, a Producer is a **type(ex, Class)** that implements specific interfaces that contain Send and/or Publish methods to Publish or Send messages to Publish Endpoints or Receive Endpoints respectively. 
+
+For example, `IBus`, `ConsumeContext`, etc are Producers. See the [Basic Communication Tutorial](../tutorials/basic-communication.md#2-publishing-messages) 
+
+We will discuss the Producer in more detail in a dedicated section. 
+
+
+#### Consumer
+
+When we discuss **Topology** or **Application**, a Consumer is an **Application** that Consumes Messages from Receive Endpoint(s). 
+In the [Basic Communication Tutorial](../tutorials/basic-communication.md#introducing-the-services), the InventoryService and OrderService are Consumer Applications.
+
+When we discuss **Code**, a Consumer is an implementation of `IConsumer<T>` where `T` is a Message Type. 
+In the [Basic Communication Tutorial](../tutorials/basic-communication.md), `SubmitOrderConsumer` and `ProcessOrderConsumer` are implementation of Consumers
+
+
+We will discuss Consumers in more detail in a dedicated section. 
 
 
 

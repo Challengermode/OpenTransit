@@ -65,7 +65,7 @@ In this example, messages are published from two places:
 - From inside the **SubmitOrderConsumer**
 [!code-csharp[](code-sample/OrderService.SubmitOrderConsumer.cs#L6-L18)]
 
-Both `IBus` and `ConsumeContext<T>` act as Producers, because you can call `Publish(T message)` on either of them.
+Both `IBus` and `ConsumeContext<T>` are Producers. You may call `Publish(T message)` on either of them.
 
 When publishing inside a [Consumer](#publishing-from-inside-a-consumer), it is **highly recommended** to use the `ConsumeContext<T>` Producer as we have done in the SubmitOrderConsumer. We’ll discuss why in the dedicated Producers section.
 
@@ -106,16 +106,17 @@ In this step, we perform three main tasks:
 
 3. **Register the consumers**(if any)
 
-All the above 3 tasks is done onthe `Program.cs` of OrderService
+All the above 3 tasks is done on the `Program.cs` of OrderService
 [!code-csharp[](code-sample/OrderService.Program.cs#L12-L25)]
 
+However, the Client doesn't consume any messages. So no Consumer is registered, and the `ConfigureEndpoints()` method isn't called.  
 
 ---
 
 ### 5. The Topology:
 
-This example uses **[broker-agnostic](../concepts/topology#broker-agnostic-way)** configuration, so you don’t need to understand the underlying broker [topology](../concepts/topology) for basic communication.  
-Here, we only used the `UsingRabbitMq` method to provide the Connection Configuration and to configure the Publish and Receive [Endpoints](../concepts/generic-broker#generic-broker-terminologies)(a generic concept among all the brokers) on the broker. 
+This example uses **[broker-agnostic](../concepts/topology#broker-agnostic-way)** configuration, so you don’t need to understand the broker's internal [topology](../concepts/topology) for basic communication.  
+Here, we only used the `UsingRabbitMq` method to provide the Connection Configuration and to configure the Publish and Receive [Endpoints](../concepts/generic-broker#endpoints)(a generic concept among all the brokers) on the broker. 
 
 Since this Configurations aren't RabbitMQ specific, and you may use any other broker here and, the Message Communication would work fine. We will add examples with other brokers soon.
 
@@ -124,6 +125,8 @@ Since this Configurations aren't RabbitMQ specific, and you may use any other br
 
 In this project, we work with two message types: **SubmitOrder** and **ProcessOrder**.  
 Based on these message types, the topology is set up in the following way:
+
+![ Generic Broker Topology](/images/tutorials/basic-communication/topology.png)
 
 1. **Two Publish Endpoints and Two Receive Endpoints are created**, one pair for each message type.
 2. Each `IConsumer<T>` is automatically subscribed to the **Receive Endpoint** for its message type **T**.
@@ -136,7 +139,7 @@ Based on these message types, the topology is set up in the following way:
 #### Broker's internal topology
 
 # [RabbitMQ](#tab/rabbitmq)
-However, knowing the underlying broker [topology](../concepts/topology) is very helpful when debugging message-routing issues.
+However, knowing the broker's internal [topology](../concepts/topology) is very helpful when debugging message-routing issues.
 
 In our example, Each Consumer is consuming a single message type. 
 Here, for each MessageType, 2 **Exchanges** and one **Queue** are being created. 
@@ -145,6 +148,15 @@ For example, if you open the RabbitMq management plugin, you will see, for the S
 Another **Exchange** named `Shared:SubmitOrder` is created and the `SubmitOrder` **Exchange** is bound to it. (Here, **'Shared'** came from the **Namespace** of the message)
 
 When we publish SubmitOrder messages via a Producer, the message is published to the `Shared:SubmitOrder` exchange, then routed to the SubmitOrder exchange and, then ultimately routed to the SubmitOrder queue. 
+
+#### Mapping RabbitMQ topology with the Generic Broker
+
+Here, we are mapping RabbitMQ-specific concepts to the Generic Broker model.
+
+- The `SubmitOrder` and `ProcessOrder` queues act as the **Receive Endpoints** for the `SubmitOrder` and `ProcessOrder` messages, respectively.
+- The `Shared:SubmitOrder` and `Shared:ProcessOrder` exchanges represent the **Publish Endpoints** for those same messages.
+- The remaining exchanges are RabbitMQ-specific implementation details and do not map to any concept in the Generic Broker.
+
 
 ---
 

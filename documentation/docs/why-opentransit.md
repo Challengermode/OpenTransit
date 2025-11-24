@@ -22,7 +22,7 @@ Next, let’s take a closer look at how it abstracts the broker and simplifies d
 
 Almost all the brokers provide some Basic Functionality. And most of the time the generic functionalities is sufficient for our use cases.  
 
-OpenTransit introduces a concept of *[Generic Broker](/Topology%20&%20Generic%20Broker/Generic%20Broker)*. With this, we can configure topology of the distributed without knowing the internal details of the broker. 
+OpenTransit introduces a concept of *[Generic Broker](concepts/generic-broker.md)*. With this, we can configure topology of the distributed without knowing the internal details of the broker. 
 
 However, we can use broker specific features too if we need. 
 
@@ -35,6 +35,7 @@ These patterns simplify complex messaging and orchestration scenarios, helping y
 
 Some of the supported patterns include:
 
+- [Commands and Events](patterns/commands-and-events/overview.md)
 - Request Response Pattern
 - Routing Slip Pattern
 - Mediator
