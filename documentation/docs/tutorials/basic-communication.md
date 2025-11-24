@@ -126,7 +126,7 @@ Since this Configurations aren't RabbitMQ specific, and you may use any other br
 In this project, we work with two message types: **SubmitOrder** and **ProcessOrder**.  
 Based on these message types, the topology is set up in the following way:
 
-![ Generic Broker Topology](/images/tutorials/basic-communication/topology.PNG)
+![ Generic Broker Topology](../../images/tutorials/basic-communication/topology.png)
 
 1. **Two Publish Endpoints and Two Receive Endpoints are created**, one pair for each message type.
 2. Each `IConsumer<T>` is automatically subscribed to the **Receive Endpoint** for its message type **T**.
