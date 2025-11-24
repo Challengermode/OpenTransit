@@ -1,5 +1,5 @@
 ﻿
-The generic broker concept is an abstraction of all the Broker supported by OpenTransit. It contains all the common features of all the supported brokers. 
+The generic broker concept is an abstraction of all the Brokers supported by OpenTransit. It contains all the common features of all the supported brokers. 
 
 ## Common Broker Features
 
@@ -8,11 +8,11 @@ In practice, these common features cover the majority of real-world use cases.
 
 For example:
 
-- All of them offer a **Publish Endpoint** where messages can be published.  
+- All of them offer **Publish Endpoints** where messages can be published.  
   - RabbitMQ calls this an **Exchange**.  
   - Azure Service Bus, ActiveMQ, and Amazon SNS call it a **Topic**.
 
-- All of them provide a **Receive Endpoint**, typically referred to as a **Queue**, where consumers subscribe.
+- All of them provide **Receive Endpoints**, typically referred to as **Queue**, where consumers subscribe.
 
 Producers publish messages to Publish Endpoints, and Consumers subscribe to Receive Endpoints.
 

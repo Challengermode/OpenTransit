@@ -50,7 +50,7 @@ Examples:
 The messages and Consumers classes are kept on the **Shared** Project.
 
 ### Command Implementation
-Since the [Receive Endpoint](generic-broker.md#receive-endpoint) natively implements the [Competing Consumers Pattern](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CompetingConsumers.html), 
+Since the [Receive Endpoint](../../concepts/generic-broker.md#receive-endpoint) natively implements the [Competing Consumers Pattern](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CompetingConsumers.html), 
 no additional configuration is needed. 
 
 In the [Example Project](https://github.com/OpenTransitLab/Tutorials/tree/main/CommandsAndEvents) you will see both **ApplicationA** and **ApplicationB** subscribed for the `ProcessOrder` message. 
