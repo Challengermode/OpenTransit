@@ -84,7 +84,7 @@ When the `OrderProcessed` message is published to its Publish Endpoint, the brok
 
 So let's see how the topology looks like from a Generic Broker's Perspective. 
 
-![ Commands and Events Topology ](/images/patterns/commands-and-events/generic-broker-topology.png)
+![ Commands and Events Topology ](/images/patterns/commands-and-events/generic-broker-topology.PNG)
 
 ---
 
