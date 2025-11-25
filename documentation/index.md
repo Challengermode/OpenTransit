@@ -53,16 +53,6 @@ We’re looking for feedback, suggestions, and ideas from developers like you �
 
 <center>
 
-### Found something confusing? Have a suggestion? Want to help?
-
-</center>
-
-Open an issue, start a discussion, or contribute directly — every bit helps.
-
----
-
-<center>
-
 ## Join the Journey
 
 </center>
@@ -75,3 +65,9 @@ Whether you’re here to learn, contribute, or just explore — **you’re part 
 
 Let’s keep distributed messaging open and accessible for everyone in the .NET world.  
 **Together, we can make it happen.**
+
+Join us on [Discord](https://discord.gg/ghJsM9j6Dr):
+
+Here is the [Github Repo](https://github.com/OpenTransitLab/OpenTransit). Currently, we are only accepting Contribution on Documentation. 
+
+  
