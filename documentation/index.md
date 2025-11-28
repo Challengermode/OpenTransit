@@ -53,6 +53,15 @@ We’re looking for feedback, suggestions, and ideas from developers like you �
 
 <center>
 
+## Community-Driven, Not a One-Person Project
+
+OpenTransit is being built with long-term stability in mind. It will not rely on a single maintainer or become a “solo-maintained” effort.
+Our goal is to bring together a healthy group of contributors who understand the ecosystem, review each other’s work, and keep the project evolving even if any one person steps away.
+
+The project will remain **Free and Open Source forever**, and its direction will be shaped openly by the community.
+By growing a diverse contributor base early, we’re ensuring that OpenTransit stays resilient, transparent, and sustainable for years to come.
+
+
 ## Join the Journey
 
 </center>
