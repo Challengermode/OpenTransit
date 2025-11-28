@@ -41,6 +41,7 @@ Once MassTransit v8 reaches end of support, we’ll begin publishing our fork un
 ## Early public — Open Feedback
 
 </center>
+
 </br>
 
 We decided to make the project public early, even though the documentation isn't complete and the website isn’t fully ready yet.
@@ -49,11 +50,15 @@ We decided to make the project public early, even though the documentation isn't
 
 We’re looking for feedback, suggestions, and ideas from developers like you — to make OpenTransit better, together.
 
-</br>
+---
 
 <center>
 
 ## Community-Driven, Not a One-Person Project
+
+</center>
+
+</br>
 
 OpenTransit is being built with long-term stability in mind. It will not rely on a single maintainer or become a “solo-maintained” effort.
 Our goal is to bring together a healthy group of contributors who understand the ecosystem, review each other’s work, and keep the project evolving even if any one person steps away.
@@ -61,6 +66,9 @@ Our goal is to bring together a healthy group of contributors who understand the
 The project will remain **Free and Open Source forever**, and its direction will be shaped openly by the community.
 By growing a diverse contributor base early, we’re ensuring that OpenTransit stays resilient, transparent, and sustainable for years to come.
 
+---
+
+<center>
 
 ## Join the Journey
 
@@ -79,4 +87,4 @@ Join us on [Discord](https://discord.gg/ghJsM9j6Dr):
 
 Here is the [Github Repo](https://github.com/OpenTransitLab/OpenTransit). Currently, we are only accepting Contribution on Documentation. 
 
-  
+---
