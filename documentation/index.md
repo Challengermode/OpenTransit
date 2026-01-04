@@ -10,6 +10,8 @@ Hey there! 👋
 **OpenTransit** is a free and open-source alternative to the most popular messaging framework in .NET — **[MassTransit](https://github.com/MassTransit/MassTransit)**. It is a **community-maintained fork of MassTransit v8**, the last open-source version before it went commercial.
 We started this project because we believe great tools should stay open and accessible to everyone.
 
+We’re building OpenTransit to become the de-facto standard for distributed messaging — the natural first choice in a developer’s mind whenever reliability and scale enter the conversation. 
+
 However, there is a catch: OpenTransit will be supported only for **.NET 10+**. 
 
 ---
