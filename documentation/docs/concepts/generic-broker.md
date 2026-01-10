@@ -20,8 +20,10 @@ Most brokers also allow you to configure **routing** between Publish Endpoints a
 This means that when a message arrives at a Publish Endpoint, the broker forwards it to one or more Receive Endpoints based on the defined routing configuration.  
 (You can still send messages directly to the ReceiveEndpoint if needed.)
 
-These behaviors are consistent across brokers.
+These behaviors are consistent across brokers. 
 
+Some databases, such as SQL Server or PostgreSQL, provide features that allow them to function as a simple message broker in certain workloads. 
+In OpenTransit, SQL Server and PostgreSQL can also be used as Brokers, leveraging these shared capabilities.
 
 
 ## The Generic Broker Concept
