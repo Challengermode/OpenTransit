@@ -123,17 +123,19 @@ public class CronExpressionTest
         "10:15am 1-6th of mon and every Mon,Thu,Fri October 2010")]
     [TestCase("0 15 10 * * MON,THU,FRI 2010",
         new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 },
-        "10:15am EveryDay of Month October 2010, Wildcard specified")]
+        "10:15am EveryDay of Month October 2010, Wildcard day-of-month means all days")]
     [TestCase("0 15 10 1 * * 2010", new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 },
-        "10:15am Every Day of Month October 2010, Wildcard specified")]
+        "10:15am Every Day of Month October 2010, Wildcard day-of-week means all days")]
     public void CanUse_DayOfMonth_And_DayOfWeek_Together(string cronExpression, int[] expectedDays, string scenario = "")
     {
-        var expr = new CronExpression(cronExpression);
-        var templateDate = new DateTime(2010, 10, 1, 10, 15, 0).ToUniversalTime();
+        var expr = new CronExpression(cronExpression) { TimeZone = TimeZoneInfo.Utc };
+        // Use UTC directly to avoid DST conversion issues
+        const int hour = 10;
+        const int minute = 15;
 
         foreach (var day in expectedDays)
         {
-            var date = new DateTime(templateDate.Year, templateDate.Month, day, templateDate.Hour, templateDate.Minute, templateDate.Second, templateDate.Kind);
+            var date = new DateTime(2010, 10, day, hour, minute, 0, DateTimeKind.Utc);
             Assert.That(expr.IsSatisfiedBy(date), Is.True, $"expected day of {day}, {scenario}");
         }
 
@@ -141,7 +143,7 @@ public class CronExpressionTest
 
         foreach (var day in invalidDays)
         {
-            var date = new DateTime(templateDate.Year, templateDate.Month, day, templateDate.Hour, templateDate.Minute, templateDate.Second, templateDate.Kind);
+            var date = new DateTime(2010, 10, day, hour, minute, 0, DateTimeKind.Utc);
             Assert.That(expr.IsSatisfiedBy(date), Is.False, $"invalid day of {day}, {scenario}");
         }
     }
@@ -837,21 +839,20 @@ public class CronExpressionTest
     {
         var expression = new CronExpression("0 15 15 5 11 ?");
         var sut = expression.GetExpressionSummary();
-        Assert.That(sut, Is.EqualTo(
-            @"seconds: 0
-minutes: 15
-hours: 15
-daysOfMonth: 5
-months: 11
-daysOfWeek: ?
-lastdayOfWeek: False
-nearestWeekday: False
-NthDayOfWeek: 0
-lastdayOfMonth: False
-calendardayOfWeek: False
-calendardayOfMonth: False
-years: *
-"));
+        var expected = "seconds: 0\n" +
+            "minutes: 15\n" +
+            "hours: 15\n" +
+            "daysOfMonth: 5\n" +
+            "months: 11\n" +
+            "daysOfWeek: ?\n" +
+            "lastdayOfWeek: False\n" +
+            "nearestWeekday: False\n" +
+            "NthDayOfWeek: 0\n" +
+            "lastdayOfMonth: False\n" +
+            "calendardayOfWeek: False\n" +
+            "calendardayOfMonth: False\n" +
+            "years: *\n";
+        Assert.That(sut, Is.EqualTo(expected));
     }
 
     [TestCase("OCT", 10)]
