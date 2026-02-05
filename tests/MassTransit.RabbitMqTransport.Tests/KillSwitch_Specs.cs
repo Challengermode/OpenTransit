@@ -60,12 +60,12 @@ public class Using_the_kill_switch_with_rabbitmq
         {
             Assert.That(await busControl.WaitForHealthStatus(BusHealthStatus.Degraded, TimeSpan.FromSeconds(10)), Is.EqualTo(BusHealthStatus.Degraded));
 
-            Assert.That(await harness.Consumed.SelectAsync<MessageA>().Take(10).Count(), Is.EqualTo(10));
+            Assert.That(await harness.Consumed.SelectAsync<MessageA>().TakeElements(10).Count(), Is.EqualTo(10));
 
             Assert.That(await busControl.WaitForHealthStatus(BusHealthStatus.Healthy, TimeSpan.FromSeconds(10)), Is.EqualTo(BusHealthStatus.Healthy));
         });
 
-        Assert.That(await harness.Consumed.SelectAsync<MessageA>().Take(20).Count(), Is.EqualTo(20));
+        Assert.That(await harness.Consumed.SelectAsync<MessageA>().TakeElements(20).Count(), Is.EqualTo(20));
     }
 
 

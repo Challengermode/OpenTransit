@@ -34,6 +34,17 @@ namespace MassTransit.Testing
             return elements.Select(x => true, cancellationToken).Count();
         }
 
+#if NET10_0_OR_GREATER
+        /// <summary>
+        /// Takes the first <paramref name="quantity"/> elements from the async enumerable.
+        /// On .NET 10+, delegates to System.Linq.AsyncEnumerable.Take.
+        /// </summary>
+        public static IAsyncEnumerable<TElement> TakeElements<TElement>(this IAsyncEnumerable<TElement> elements, int quantity)
+            where TElement : class
+        {
+            return System.Linq.AsyncEnumerable.Take(elements, quantity);
+        }
+#else
         public static async IAsyncEnumerable<TElement> Take<TElement>(this IAsyncEnumerable<TElement> elements, int quantity)
             where TElement : class
         {
@@ -47,6 +58,16 @@ namespace MassTransit.Testing
                     yield break;
             }
         }
+
+        /// <summary>
+        /// Alias for Take, provided for source compatibility with .NET 10+
+        /// </summary>
+        public static IAsyncEnumerable<TElement> TakeElements<TElement>(this IAsyncEnumerable<TElement> elements, int quantity)
+            where TElement : class
+        {
+            return elements.Take(quantity);
+        }
+#endif
 
         public static async Task<TElement> FirstOrDefault<TElement>(this IAsyncEnumerable<TElement> elements)
             where TElement : class

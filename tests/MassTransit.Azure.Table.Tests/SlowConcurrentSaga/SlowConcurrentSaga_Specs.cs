@@ -41,7 +41,7 @@ namespace MassTransit.Azure.Table.Tests.SlowConcurrentSaga
                 Task.Run(() => InputQueueSendEndpoint.Send(slowMessage)),
                 Task.Run(() => InputQueueSendEndpoint.Send(slowMessage)));
 
-            _ = _sagaTestHarness.Consumed.Select<IncrementCounterSlowly>().Take(2).ToList();
+            _ = _sagaTestHarness.Consumed.Select<IncrementCounterSlowly>().TakeElements(2).ToList();
 
             await InactivityTask;
 

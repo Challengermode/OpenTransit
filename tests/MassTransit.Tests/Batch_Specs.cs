@@ -110,7 +110,7 @@
             await InputQueueSendEndpoint.Send(new PingMessage(), Pipe.Execute<SendContext>(ctx => ctx.CorrelationId = correlation2));
             await InputQueueSendEndpoint.Send(new PingMessage(), Pipe.Execute<SendContext>(ctx => ctx.CorrelationId = correlation2));
 
-            var count = await BusTestHarness.Consumed.SelectAsync<PingMessage>().Take(6).Count();
+            var count = await BusTestHarness.Consumed.SelectAsync<PingMessage>().TakeElements(6).Count();
 
             Assert.Multiple(() =>
             {
@@ -155,7 +155,7 @@
             await InputQueueSendEndpoint.Send(new PingMessage(), Pipe.Execute<SendContext>(ctx => ctx.CorrelationId = correlation2));
             await InputQueueSendEndpoint.Send(new PingMessage(), Pipe.Execute<SendContext>(ctx => ctx.CorrelationId = correlation2));
 
-            var count = await BusTestHarness.Consumed.SelectAsync<PingMessage>().Take(6).Count();
+            var count = await BusTestHarness.Consumed.SelectAsync<PingMessage>().TakeElements(6).Count();
 
             Assert.Multiple(() =>
             {

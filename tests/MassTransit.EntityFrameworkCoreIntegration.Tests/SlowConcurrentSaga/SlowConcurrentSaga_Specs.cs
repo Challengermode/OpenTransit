@@ -35,7 +35,7 @@ namespace MassTransit.EntityFrameworkCoreIntegration.Tests.SlowConcurrentSaga
                 Task.Run(() => InputQueueSendEndpoint.Send(slowMessage)),
                 Task.Run(() => InputQueueSendEndpoint.Send(slowMessage)));
 
-            _sagaTestHarness.Consumed.Select<IncrementCounterSlowly>().Take(2).ToList();
+            _sagaTestHarness.Consumed.Select<IncrementCounterSlowly>().TakeElements(2).ToList();
 
             await InactivityTask;
 

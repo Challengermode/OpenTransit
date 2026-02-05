@@ -30,7 +30,7 @@ public class Redelivery_Specs
 
         Assert.That(await harness.Published.Any<FinalMessage>());
 
-        IList<IReceivedMessage<FaultyMessage>> messages = await harness.Consumed.SelectAsync<FaultyMessage>().Take(2).ToListAsync();
+        IList<IReceivedMessage<FaultyMessage>> messages = await harness.Consumed.SelectAsync<FaultyMessage>().TakeElements(2).ToListAsync();
 
         IReceivedMessage<FaultyMessage> faulted = messages.First();
         Assert.That(faulted, Is.Not.Null);

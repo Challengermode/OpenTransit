@@ -242,7 +242,7 @@ public class Using_multiple_redelivery_filters
 
         Assert.That(await harness.Published.Any<Fault<MessageB>>());
 
-        IList<IPublishedMessage<Fault<MessageB>>> faults = await harness.Published.SelectAsync<Fault<MessageB>>().Take(3).ToListAsync();
+        IList<IPublishedMessage<Fault<MessageB>>> faults = await harness.Published.SelectAsync<Fault<MessageB>>().TakeElements(3).ToListAsync();
 
         Assert.That(faults.Count, Is.EqualTo(1));
 

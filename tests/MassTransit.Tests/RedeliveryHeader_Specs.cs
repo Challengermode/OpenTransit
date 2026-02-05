@@ -42,7 +42,7 @@ namespace MassTransit.Tests
 
             await harness.Bus.Publish(new InboundMessage());
 
-            IReceivedMessage<OutboundMessage> message = await harness.Consumed.SelectAsync<OutboundMessage>().Take(1).FirstOrDefault();
+            IReceivedMessage<OutboundMessage> message = await harness.Consumed.SelectAsync<OutboundMessage>().TakeElements(1).FirstOrDefault();
             Assert.That(message, Is.Not.Null);
 
             Assert.That(message.Context.GetHeader(MessageHeaders.RedeliveryCount, default(int?)), Is.Null);

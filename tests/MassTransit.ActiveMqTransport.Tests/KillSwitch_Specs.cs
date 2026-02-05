@@ -32,14 +32,14 @@ namespace MassTransit.ActiveMqTransport.Tests
 
                 Assert.That(await BusControl.WaitForHealthStatus(BusHealthStatus.Healthy, TimeSpan.FromSeconds(10)), Is.EqualTo(BusHealthStatus.Healthy));
 
-                Assert.That(await ActiveMqTestHarness.Consumed.SelectAsync<BadMessage>().Take(11).Count(), Is.EqualTo(11));
+                Assert.That(await ActiveMqTestHarness.Consumed.SelectAsync<BadMessage>().TakeElements(11).Count(), Is.EqualTo(11));
             });
 
             await Task.WhenAll(Enumerable.Range(0, 20).Select(x => Bus.Publish(new GoodMessage())));
 
             await Task.Delay(1000);
 
-            Assert.That(await ActiveMqTestHarness.Consumed.SelectAsync<GoodMessage>().Take(20).Count(), Is.EqualTo(20));
+            Assert.That(await ActiveMqTestHarness.Consumed.SelectAsync<GoodMessage>().TakeElements(20).Count(), Is.EqualTo(20));
         }
 
         protected override void ConfigureActiveMqBus(IActiveMqBusFactoryConfigurator configurator)

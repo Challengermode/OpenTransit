@@ -31,9 +31,9 @@ namespace MassTransit.Tests
 
             await Assert.MultipleAsync(async () =>
             {
-                Assert.That(await InMemoryTestHarness.Consumed.SelectAsync<BadMessage>().Take(20).Count(), Is.EqualTo(20));
+                Assert.That(await InMemoryTestHarness.Consumed.SelectAsync<BadMessage>().TakeElements(20).Count(), Is.EqualTo(20));
 
-                Assert.That(await InMemoryTestHarness.Consumed.SelectAsync<GoodMessage>().Take(20).Count(), Is.EqualTo(20));
+                Assert.That(await InMemoryTestHarness.Consumed.SelectAsync<GoodMessage>().TakeElements(20).Count(), Is.EqualTo(20));
             });
         }
 

@@ -42,16 +42,16 @@ public class Configuring_a_recurring_job_consumer
             var jobId = await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), x => x.Every(seconds: 5),
                 harness.CancellationToken);
 
-            Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(1).Count(), Is.EqualTo(1));
+            Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(1).Count(), Is.EqualTo(1));
 
             await harness.Bus.CancelRecurringJob<RecurringJobMessage>(nameof(RecurringJobConsumer), "Not right now");
 
-            Assert.That(await harness.Published.SelectAsync<JobCanceled>(x => x.Context.Message.JobId == jobId).Take(1).Count(), Is.EqualTo(1));
+            Assert.That(await harness.Published.SelectAsync<JobCanceled>(x => x.Context.Message.JobId == jobId).TakeElements(1).Count(), Is.EqualTo(1));
 
             await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), x => x.Every(seconds: 5),
                 harness.CancellationToken);
 
-            Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(2).Count(), Is.EqualTo(2));
+            Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(2).Count(), Is.EqualTo(2));
         }
         finally
         {
@@ -88,7 +88,7 @@ public class Configuring_a_recurring_job_consumer
         var jobId = await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), x => x.Every(seconds: 5),
             harness.CancellationToken);
 
-        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(2).Count(), Is.EqualTo(2));
+        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(2).Count(), Is.EqualTo(2));
 
         await harness.Stop();
     }
@@ -125,7 +125,7 @@ public class Configuring_a_recurring_job_consumer
         var job3Id = await client.AddOrUpdateRecurringJob("Tree", new MaintenanceTask { Name = "Tree" }, x => x.Every(seconds: 10), harness.CancellationToken);
         var job4Id = await client.AddOrUpdateRecurringJob("Four", new MaintenanceTask { Name = "Four" }, x => x.Every(seconds: 15), harness.CancellationToken);
 
-        Assert.That(await harness.Published.SelectAsync<JobCompleted<MaintenanceTask>>().Take(30).Count(), Is.EqualTo(30));
+        Assert.That(await harness.Published.SelectAsync<JobCompleted<MaintenanceTask>>().TakeElements(30).Count(), Is.EqualTo(30));
 
         await harness.Stop();
     }
@@ -159,12 +159,12 @@ public class Configuring_a_recurring_job_consumer
         var jobId = await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), "*/5 * * * * ?",
             harness.CancellationToken);
 
-        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(1).Count(), Is.EqualTo(1));
+        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(1).Count(), Is.EqualTo(1));
 
         await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), "*/10 * * * * ?",
             harness.CancellationToken);
 
-        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(2).Count(), Is.EqualTo(2));
+        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(2).Count(), Is.EqualTo(2));
 
         await harness.Stop();
     }
@@ -198,12 +198,12 @@ public class Configuring_a_recurring_job_consumer
         var jobId = await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), "*/5 * * * * ?",
             harness.CancellationToken);
 
-        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(1).Count(), Is.EqualTo(1));
+        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(1).Count(), Is.EqualTo(1));
 
         await client.AddOrUpdateRecurringJob(nameof(RecurringJobConsumer), new RecurringJobMessage(), "*/5 * * * * ?",
             harness.CancellationToken);
 
-        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().Take(2).Count(), Is.EqualTo(2));
+        Assert.That(await harness.Published.SelectAsync<JobCompleted<RecurringJobMessage>>().TakeElements(2).Count(), Is.EqualTo(2));
 
         await harness.Stop();
     }
