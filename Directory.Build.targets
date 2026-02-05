@@ -1,0 +1,7 @@
+<Project>
+  <!-- Override PackageId to use ChallengerMode.OpenTransit instead of MassTransit -->
+  <PropertyGroup>
+    <PackageId Condition="'$(PackageId)' != ''">$([System.String]::Copy('$(PackageId)').Replace('MassTransit', 'ChallengerMode.OpenTransit'))</PackageId>
+    <PackageId Condition="'$(PackageId)' == ''">$([System.String]::Copy('$(AssemblyName)').Replace('MassTransit', 'ChallengerMode.OpenTransit'))</PackageId>
+  </PropertyGroup>
+</Project>

@@ -45,3 +45,14 @@ jobs:
     - name: Push
       run: |
         dotnet nuget push "out/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+    - name: Unlist packages
+      run: |
+        for pkg in out/*.nupkg; do
+          filename=$(basename "$pkg" .nupkg)
+          # Extract package name and version (format: PackageName.Version.nupkg)
+          pkgname=$(echo "$filename" | sed 's/\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*.*$//')
+          version=$(echo "$filename" | sed "s/^${pkgname}\.//")
+          echo "Unlisting $pkgname version $version"
+          dotnet nuget delete "$pkgname" "$version" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --non-interactive || true
+        done
